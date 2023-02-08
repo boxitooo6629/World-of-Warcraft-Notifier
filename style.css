@@ -1,0 +1,75 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #F2F4F7;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 30px;
+    font-weight: bold;
+    color: #3E4C59;
+}
+
+#search-input {
+    width: 50%;
+    padding: 10px;
+    margin: 20px auto;
+    display: block;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #CBD2D9;
+}
+
+#chat-container {
+    background-color: #FFFFFF;
+    border-radius: 10px;
+    width: 50%;
+    padding: 20px;
+    margin: 20px auto;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+#chat-output {
+    height: 300px;
+    overflow: auto;
+    padding: 10px;
+    background-color: #F2F4F7;
+    border-radius: 5px;
+    border: 1px solid #CBD2D9;
+}
+
+#chat-input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    margin-top: 10px;
+    border-radius: 5px;
+    border: 1px solid #CBD2D9;
+}
+
+#chat-submit {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    background-color: #4E7CFF;
+    color: #FFFFFF;
+    border-radius: 5px;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+#dungeon-list {
+    width: 50%;
+    margin: 20px auto;
+    font-size: 16px;
+    list-style: none;
+}
+
+#dungeon-list li {
+    padding: 10px;
+    background-color: #FFFFFF;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: 1px solid #CBD2D9;
+}
