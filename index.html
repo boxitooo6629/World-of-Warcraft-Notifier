@@ -1,46 +1,31 @@
 <!DOCTYPE html>
 <html>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-<link rel="stylesheet" type="text/css" href="style.css">
 <head>
     <title>World of Warcraft Dungeon Notifier</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 </head>
 
 <body>
-    <h1>World of Warcraft Dungeon Notifier</h1>
-    <input type="text" id="search-input" placeholder="Search dungeons">
-    <div id="chat-container">
-        <div id="chat-output">
-            <!-- messages will be displayed here -->
+    <div class="container">
+        <h1 class="display-4 my-5 text-center">World of Warcraft Dungeon Notifier</h1>
+        <div class="row">
+            <div class="col-4">
+                <input type="text" id="search-input" class="form-control mb-3" placeholder="Search dungeons">
+                <ul id="dungeon-list" class="list-group shadow">
+                </ul>
+            </div>
+            <div class="col-8">
+                <h4 class="mb-4 mt-2">Chat</h4>
+                <div class="row">
+                    <div id="chat" class="col-12 border shadow-sm rounded p-3 vstack overflow-auto" style="height: 50vh">
+                    </div>
+                </div>
+            </div>
         </div>
-        <input type="text" id="chat-input">
-        <button id="chat-submit">Search Dungeon</button>
     </div>
-    <div id="dungeon-list">
-        <li>Ragefire Chasm</li>
-        <li>The Deadmines</li>
-        <li>Wailing Caverns</li>
-        <li>Shadowfang Keep</li>
-        <li>The Stockade</li>
-        <li>Gnomeregan</li>
-        <li>The Scarlet Monastery</li>
-        <li>Razorfen Kraul</li>
-        <li>Razorfen Downs</li>
-        <li>Maraudon</li>
-        <li>Uldaman</li>
-        <li>Dire Maul</li>
-        <li>Strathholme</li>
-        <li>Blackrock Depths</li>
-        <li>Blackfathom Deeps</li>
-        <li>Dire Maul</li>
-        <li>Maraudon</li>
-        <li>Razorfen Kraul</li>
-        <li>Razorfen Downs</li>
-        <li>Uldaman</li>
-        <li>Zul'Farrak</li>
-    </div>
-    <script src="script.js"></script>
+    <script type="text/javascript" src="script.js"></script>
 </body>
 
 </html>
