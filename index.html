@@ -1,31 +1,59 @@
 <!DOCTYPE html>
 <html>
+    <head>
+        <title>World of Warcraft Dungeon Notifier</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+            integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment-with-locales.min.js" integrity="sha512-42PE0rd+wZ2hNXftlM78BSehIGzezNeQuzihiBCvUEB3CVxHvsShF86wBWwQORNxNINlBPuq7rG4WWhNiTVHFg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="./moment-timezone-with-data.min.js"></script>
+    </head>
 
-<head>
-    <title>World of Warcraft Dungeon Notifier</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-</head>
-
-<body>
-    <div class="container">
-        <h1 class="display-4 my-5 text-center">World of Warcraft Dungeon Notifier</h1>
-        <div class="row">
-            <div class="col-4">
-                <input type="text" id="search-input" class="form-control mb-3" placeholder="Search dungeons">
-                <ul id="dungeon-list" class="list-group shadow">
-                </ul>
-            </div>
-            <div class="col-8">
-                <h4 class="mb-4 mt-2">Chat</h4>
-                <div class="row">
-                    <div id="chat" class="col-12 border shadow-sm rounded p-3 vstack overflow-auto" style="height: 50vh">
+    <body>
+        <!-- Modal -->
+        <div class="modal" id="foundModal" tabindex="-1" aria-labelledby="foundModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="foundModalLabel">Found match!</h1>
+                    </div>
+                    <div class="modal-body">
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    <script type="text/javascript" src="script.js"></script>
-</body>
-
+        <div class="modal" id="searchingModal" tabindex="-1" aria-labelledby="searchingModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="searchingModalLabel">Looking for Match</h1>
+                    </div>
+                    <div class="modal-body">
+                        Please wait, we are looking for your match.
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <h1 class="display-4 my-5 text-center">World of Warcraft Dungeon Notifier</h1>
+            <div class="row">
+                <div class="col-4">
+                    <input type="text" id="search-input" class="form-control mb-3" placeholder="Search dungeons">
+                    <ul id="dungeon-list" class="list-group shadow">
+                    </ul>
+                </div>
+                <div class="col-8">
+                    <h4 class="mb-4 mt-2">Chat</h4>
+                    <div class="row">
+                        <div id="chat" class="col-12 border shadow-sm rounded p-3 vstack overflow-auto" style="height: 50vh">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script type="text/javascript" src="script.js"></script>
+    </body>
 </html>

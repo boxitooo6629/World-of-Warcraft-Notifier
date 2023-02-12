@@ -21,17 +21,47 @@ const dungeonList = [
     "Razorfen Downs",
     "Uldaman",
     "Zul'Farrak",
+    "Netherweave",
 ];
- // function that calls event bottonclick then prevent any soft bugs. Then create all the instances in html and make a function to all of them.
+
+const searchingModal = document.querySelector("#searchingModal");
+const foundModal = document.querySelector("#foundModal");
+
+let searchQuery = "";
+let searchStart = false;
+
+searchingModal.addEventListener("hide.bs.modal", function() {
+    searchQuery = "";
+    searchStart = false;
+});
+
+foundModal.addEventListener("hide.bs.modal", function() {
+    document.querySelectorAll("button.active").forEach(function(button) {
+        button.classList.remove("active");
+    });
+});
+
+// function that serves as callaback to event listener whenever a button is clicked.
 function onDungeonButtonClick(e) {
-    e.preventDefault()
+    e.preventDefault();
     let element = e.target;
-    document.querySelectorAll(".active").forEach(function(button) {
-        button.classList.remove("active")
-    })
-    element.classList.add("active")
+
+    //  show looking for dungeon modal
+    bootstrap.Modal.getOrCreateInstance(searchingModal, {
+        keyboard: false,
+        backdrop: "static",
+    }).show();
+
+    searchQuery = element.textContent;
+    searchStart = moment()
+
+    document.querySelectorAll("button.active").forEach(function(button) {
+        button.classList.remove("active");
+    });
+    element.classList.add("active");
 }
- // function that loops through all the instances and creates button that has function
+
+// function that loops through dungeon list and creates button that with attached event callback
 function listDungeon(list) {
     for (let i = 0; i < dungeonList.length; i++) {
         let button = document.createElement("button");
@@ -43,9 +73,50 @@ function listDungeon(list) {
         list.append(button);
     }
 }
- // function that gets dungeon list and ...
+function searchChatForDungeon(list, query) {
+    let regex = /(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}) (\*\*\[.*\]\*\*) (.*)/;
+    return list.reduce(function(acc, cur) {
+        if (!cur.match(regex)) {
+            return acc;
+        }
+        let [date, username, text] = cur.match(regex).slice(1);
+        date = moment.tz(date, "YYYY-MM-DD HH:mm:ss", "Europe/Moscow").local();
+        if (date.isAfter(searchStart) && text.includes(query)) {
+            acc.push({
+                date,
+                username,
+                text,
+            });
+        }
+        return acc;
+    }, []);
+}
+// function that gets dungeon list and ...
 function main() {
     let list = document.getElementById("dungeon-list");
+
+    pollForChatMessages(function(messagesList) {
+        renderChat(messagesList);
+
+        if (searchQuery !== "") {
+            let messages = searchChatForDungeon(messagesList, searchQuery);
+
+            if (!messages.length) return
+
+            bootstrap.Modal.getOrCreateInstance(searchingModal).hide();
+            let body = foundModal.querySelector(".modal-body");
+            let messageContainer = document.createElement("span");
+
+            messageContainer.classList.add("font-monospace", "fs-6");
+            messageContainer.textContent = `${messages[0].date.format("YYYY-MM-DD HH:mm:ss")} - ${messages[0].username
+                }: ${messages[0].text}`;
+            body.innerHTML = "";
+            body.append(messageContainer);
+
+            bootstrap.Modal.getOrCreateInstance(foundModal).show();
+        }
+    });
+
     listDungeon(list);
     document
         .getElementById("search-input")
@@ -65,87 +136,46 @@ function main() {
             }
         });
 }
- // calling the function...
+// calling the main function on ready
 document.onreadystatechange = main();
 
+function normalizeChatMessages(response) {
+    return response.table.rows.map(function(row) {
+        return row.c[0].v;
+    });
+}
 
+function renderChat(messages) {
+    const chat = document.getElementById("chat");
+    chat.innerHTML = "";
+    messages.forEach(function(value) {
+        let chatMessage = document.createElement("span");
+        chatMessage.classList.add("font-monospace", "fs-6");
+        chatMessage.innerText = value;
+        chat.append(chatMessage);
+    });
+}
 
-//(fetch API )
-
-const textFileUrl = 'https://docs.google.com/spreadsheets/d/1hfz-f1oVve1SFmd84BaBmZbgbGkw0-qiK_xRtutjEPM/gviz/tq';
-let textApp = ""
-// Make a GET request to the text file using the fetch method
-fetch(textFileUrl)
-  .then(response => {
-    if (!response.ok) {
-      throw new Error(response.status);
+async function fetchChat() {
+    try {
+        const response = await fetch(
+            "https://docs.google.com/spreadsheets/d/1hfz-f1oVve1SFmd84BaBmZbgbGkw0-qiK_xRtutjEPM/gviz/tq"
+        );
+        if (!response.ok) {
+            throw new Error(response.status);
+        }
+        const text = await response.text();
+        return normalizeChatMessages(
+            JSON.parse(text.substring(47, text.length - 2))
+        );
+    } catch (error) {
+        console.error("Error:", error);
     }
-    return response.text();
-  })
-  .then(text => {
-    // Do something with the text
-    textApp = text.substring(47,text.length-2)
-   updateChat(getChat(JSON.parse(textApp)))
-  })
-  .catch(error => {
-    console.error('Error:', error);
-  });
+}
+function pollForChatMessages(cb) {
+    fetchChat().then(cb);
 
-  function getChat(response){
-    return response.table.rows.map(function(row){
-    return row.c[0].v
-   })
-  }
-   
-  function updateChat(messages) {
-  const chat= document.getElementById("chat")
-  chat.innerHTML=""
-  messages.forEach(function(value){
-  let chatMessage = document.createElement("span")
-  chatMessage.classList.add(["font-monospace", "fs-6"])
-  chatMessage.innerText = value
-  chat.append(chatMessage)
-
-  })
-  };
-  
-
-
-
-// const buttonfunction = document.querySelector("button");
-// const url = `https://docs.google.com/spreadsheets/d/1hfz-f1oVve1SFmd84BaBmZbgbGkw0-qiK_xRtutjEPM/gviz/tq`
-// var headers = {}
-   
-//     fetch(url).then(function(response) {
-    
-//         console.log (response.text());
-// }).then(function(data) {
-//   console.log(data);
-// }).catch(function(err) {
-//   console.log('Fetch Error :-S', err);
-// });
-
-
-button.addEventListener("click", function(event) {
-    // Create the modal element
-    const modal = document.createElement("div");
-    modal.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
-    modal.style.position = "fixed";
-    modal.style.top = "0";
-    modal.style.right = "0";
-    modal.style.bottom = "0";
-    modal.style.left = "0";
-    modal.style.display = "flex";
-    modal.style.alignItems = "center";
-    modal.style.justifyContent = "center";
-    modal.style.zIndex = "1000";
-
-    // Add the message to the modal
-    const message = document.createElement("p");
-    message.style.color = "#fff";
-    message.textContent = "Please wait we are working hard to find your match";
-    modal.appendChild(message);
-
-    // Add the modal to the document
-    document.body.appendChild(modal);
-});
+    return setInterval(function() {
+        fetchChat().then(cb);
+    }, 1000);
+}
