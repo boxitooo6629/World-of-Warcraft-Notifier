@@ -6,3 +6,56 @@ This app is will help you find dungeon(instance) in WoW without sitting infront 
 # Visuals
 
 ![Project photo](https://i.imgur.com/3lk3zQx.png)
+
+# Usage
+
+Moment.js
+Discord.py-self 1.9.2 (bot)
+Bootstrap
+CORS unblock
+
+# Installation
+
+Steps to install the app
+
+Download Phyton.
+Download the DiscordWoWBot and start DiscordBot.py.
+Open the website and chose the desired dungeon.
+Add extention to your browser "CORS unblock".
+Once match found copy the name on the user and contact him in game.
+
+# Support
+
+If you have any questions please don't hesitate and contact blago.diskov@outlook.com.
+
+# RoadMap
+
+Future bugfix and additional features:
+
+Match delay
+Search delay
+Server disconnects
+Bot is not reconnecting
+Game Quests will be added in search engine
+Events will be added in search engine
+Player name copy
+Chosing more than one instance
+
+Feathers and bugfixes will be updated 20/04/2023
+
+# Contributing
+
+if you want to make any changes or want to discuss please visit my github profile. [https://github.com/boxitooo6629]
+
+# Authors and Acknowledgment
+
+@2023 Blago Dishkov ® Confidential and Proprietary. All Rights Reserved.
+
+# License
+
+MIT License
+
+
+
+
+
