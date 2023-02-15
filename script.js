@@ -23,25 +23,25 @@ const dungeonList = [
     "Zul'Farrak",
     "Netherweave",
 ];
-
+//targeting modal elements
 const searchingModal = document.querySelector("#searchingModal");
 const foundModal = document.querySelector("#foundModal");
-
+//defined search variables and time when user starting searching
 let searchQuery = "";
 let searchStart = false;
-
+//event that clears the search query and resets the start timer
 searchingModal.addEventListener("hide.bs.modal", function() {
     searchQuery = "";
     searchStart = false;
 });
-
+//event that fires after the user closes the found modal
 foundModal.addEventListener("hide.bs.modal", function() {
     document.querySelectorAll("button.active").forEach(function(button) {
         button.classList.remove("active");
     });
 });
 
-// function that serves as callaback to event listener whenever a button is clicked.
+// function that serves as a call back to event listener whenever a button is clicked.
 function onDungeonButtonClick(e) {
     e.preventDefault();
     let element = e.target;
@@ -51,17 +51,18 @@ function onDungeonButtonClick(e) {
         keyboard: false,
         backdrop: "static",
     }).show();
-
+    // set button text to search query and set current time with moment.js
     searchQuery = element.textContent;
     searchStart = moment()
-
+     // if other buttons have active classes we can clear them
     document.querySelectorAll("button.active").forEach(function(button) {
         button.classList.remove("active");
     });
+    // set active class to current element
     element.classList.add("active");
 }
 
-// function that loops through dungeon list and creates button that with attached event callback
+// function that loops through dungeon list and creates button  with attached event call back
 function listDungeon(list) {
     for (let i = 0; i < dungeonList.length; i++) {
         let button = document.createElement("button");
@@ -73,8 +74,11 @@ function listDungeon(list) {
         list.append(button);
     }
 }
+ // function that filters message list by query 
 function searchChatForDungeon(list, query) {
+    // regex that parses message with following format-2023-02-13 00:02:28 **[Mucmephunt]** LFM Tank Nagrand Arena /w
     let regex = /(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}) (\*\*\[.*\]\*\*) (.*)/;
+    //filter results by date and search query
     return list.reduce(function(acc, cur) {
         if (!cur.match(regex)) {
             return acc;
@@ -91,7 +95,7 @@ function searchChatForDungeon(list, query) {
         return acc;
     }, []);
 }
-// function that gets dungeon list and ...
+// this is the main function that setups the app
 function main() {
     let list = document.getElementById("dungeon-list");
 
@@ -116,10 +120,11 @@ function main() {
             bootstrap.Modal.getOrCreateInstance(foundModal).show();
         }
     });
-
+    // show render buttons 
     listDungeon(list);
     document
         .getElementById("search-input")
+        // filter buttons by search term
         .addEventListener("input", function(e) {
             let searchTerm = e.target.value;
             let buttonElements = list.getElementsByTagName("button");
@@ -144,7 +149,7 @@ function normalizeChatMessages(response) {
         return row.c[0].v;
     });
 }
-
+// rendering chat 
 function renderChat(messages) {
     const chat = document.getElementById("chat");
     chat.innerHTML = "";
@@ -155,7 +160,7 @@ function renderChat(messages) {
         chat.append(chatMessage);
     });
 }
-
+// fetch function that takes data from google spread sheet and we reformat the data so it's readable
 async function fetchChat() {
     try {
         const response = await fetch(
@@ -172,6 +177,7 @@ async function fetchChat() {
         console.error("Error:", error);
     }
 }
+// function when called will set interval that will fetch the data every 1 second
 function pollForChatMessages(cb) {
     fetchChat().then(cb);
 

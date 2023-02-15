@@ -8,7 +8,7 @@ This app is will help you find dungeon(instance) in WoW without sitting infront 
 ![Project photo](https://i.imgur.com/3lk3zQx.png)
 
 # Usage
-
+Regex (Regular Expression)
 Moment.js
 Discord.py-self 1.9.2 (bot)
 Bootstrap
