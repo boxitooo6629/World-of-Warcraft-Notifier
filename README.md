@@ -18,10 +18,11 @@ CORS unblock
 
 Steps to install the app
 
+Unrar the discord bot and turn it on double click DiscordBot.py.
 Download Phyton.
-Download the DiscordWoWBot and start DiscordBot.py.
 Open the website and chose the desired dungeon.
 Add extention to your browser "CORS unblock".
+Start World of Warcraft TBC expansion(Moonwell)
 Once match found copy the name on the user and contact him in game.
 
 # Support
